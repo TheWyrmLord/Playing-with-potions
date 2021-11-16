@@ -12,13 +12,13 @@ if ((event.entityLiving instanceof EntityPlayer))
 				
 				if(effectLevel != persisted.getShort(PotionStepcap.TAG_NAME)) {
 					float stepHeight = PotionStepcap.increase * effectLevel;
-          if(persisted.getShort(PotionStepcap.TAG_NAME) == 0) {
-				      persisted.setFloat(PotionStepup.TAG_DEFAULT, player.stepHeight);
-          }
-          if(player.stepHeight >= stepHeight) {
-          	player.stepHeight = stepHeight;
-            persisted.setShort(PotionStepup.TAG_NAME, (short) effectLevel);
-          }
+ 					if(persisted.getShort(PotionStepcap.TAG_NAME) == 0) {
+				    		persisted.setFloat(PotionStepup.TAG_DEFAULT, player.stepHeight);
+          				}
+        				if(player.stepHeight >= stepHeight) {
+          					player.stepHeight = stepHeight;
+            					persisted.setShort(PotionStepup.TAG_NAME, (short) effectLevel);
+          				}
 				}
 			}
 			else {
