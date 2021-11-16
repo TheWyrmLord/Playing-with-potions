@@ -1,0 +1,29 @@
+if ((event.entityLiving instanceof EntityPlayer))
+		{
+			EntityPlayer player = (EntityPlayer)event.entityLiving;
+			NBTTagCompound persisted = player.getEntityData().getCompoundTag(EntityPlayer.PERSISTED_NBT_TAG);
+			if(!player.getEntityData().hasKey(EntityPlayer.PERSISTED_NBT_TAG)) {
+				player.getEntityData().setTag(EntityPlayer.PERSISTED_NBT_TAG, persisted);
+			}
+			
+			if (PotionStepcap.instance != null && player.isPotionActive(PotionStepcap.instance)) {
+				
+				int effectLevel = player.getActivePotionEffect(PotionStepcap.instance).getAmplifier();
+				
+				if(effectLevel != persisted.getShort(PotionStepcap.TAG_NAME)) {
+					float stepHeight = PotionStepcap.increase * effectLevel;
+          if(persisted.getShort(PotionStepcap.TAG_NAME) == 0) {
+				      persisted.setFloat(PotionStepup.TAG_DEFAULT, player.stepHeight);
+          }
+          if(player.stepHeight >= stepHeight) {
+          	player.stepHeight = stepHeight;
+            persisted.setShort(PotionStepup.TAG_NAME, (short) effectLevel);
+          }
+				}
+			}
+			else {
+				if(persisted.getShort(PotionStepup.TAG_NAME) != 0) {
+					player.stepHeight = persisted.getFloat(PotionStepup.TAG_DEFAULT);
+					persisted.setShort(PotionStepup.TAG_NAME, (short)0);
+				}
+			}
